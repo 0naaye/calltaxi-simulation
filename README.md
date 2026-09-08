@@ -15,7 +15,24 @@
 | 방법 | 데이터 정합화 · 공간 진단 · SimPy 기반 DES · 반복실험 · 민감도 분석 |
 | 결과물 | Streamlit 기반 진단·후보 비교 대시보드 |
 
-<!-- TODO: 공개 전 ## My Contribution 섹션을 추가하고, 실제 담당 범위 3~5개만 기재하세요. 팀 문서만으로는 개인별 담당자를 검증할 수 없어 임의로 작성하지 않았습니다. -->
+## My Contribution
+
+* **데이터 분석 및 지표 설계**
+
+  * 행정동별 대기 실태와 수요·공급 특성 분석
+  * 후보지 효과 평가 지표 설계 및 시뮬레이션 결과 검증
+  * 개선율·총 절감량·불확실성 분석
+
+* **시뮬레이션 설계 및 구현**
+
+  * SimPy 기반 Call–Vehicle 이산사건 시뮬레이션 구현
+  * 차량 공급·근무조·배차·이동시간·콜 이탈 등 주요 운영 로직 모델링
+  * 후보지 효과 평가, 반복실험 및 민감도 분석 구현
+
+* **대시보드 설계 및 구현**
+
+  * Streamlit 기반 행정동별 대기 실태 및 후보지 효과 대시보드 구현
+  * 주요 분석·시뮬레이션 결과 시각화 및 후보 비교 기능 구현
 
 ## Approach
 
@@ -78,3 +95,34 @@ streamlit run src/dashboard.py
 - 원본 콜 운행 데이터는 공개하지 않습니다.
 - 대시보드에는 공개 가능한 파생 산출물만 사용합니다.
 - 외부 기관의 비공개·부분공개 자료는 원문을 재배포하지 않고, 분석에 사용한 사실과 역할만 문서화합니다.
+
+## Project Structure
+
+```text
+.
+├── src/
+│   ├── load.py            # 데이터 로딩·전처리
+│   ├── metrics.py         # 행정동별 진단 지표 계산
+│   ├── travel_time.py     # 행정동 간 이동시간 추정
+│   ├── patience.py        # 콜 인내심 분포 추정
+│   ├── idle.py            # 차량 유휴 구간 산출
+│   ├── candidates.py      # 동별 거점 후보 배정
+│   ├── simulator.py       # SimPy 기반 DES 엔진
+│   ├── evaluate.py        # 후보지 효과 평가
+│   ├── sensitivity.py     # 민감도 분석
+│   └── dashboard.py       # Streamlit 대시보드
+│
+├── docs/
+│   ├── methodology.md     # 시뮬레이션 방법론
+│   ├── assumptions.md     # 주요 가정과 검증 상태
+│   ├── data_validation.md # 데이터 처리 및 모델 검증
+│   ├── results.md         # 후보 평가 결과
+│   ├── dashboard.md       # 대시보드 구성
+│   ├── reference.md       # 핵심 수치 정리
+│   └── sources.md         # 데이터·근거 출처
+│
+├── outputs/               # 공개 가능한 파생 결과
+├── tests/                 # 주요 계산·전처리 검증
+├── requirements.txt       # Python 의존성
+└── README.md
+```
