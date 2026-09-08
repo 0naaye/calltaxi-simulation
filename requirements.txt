@@ -1,0 +1,26 @@
+# 장애인콜택시 대기거점 시뮬레이터 — 실행 환경
+#
+# 설치:
+#   python -m venv .venv
+#   .venv\Scripts\activate          (Windows)
+#   source .venv/bin/activate        (macOS/Linux)
+#   pip install -r requirements.txt
+#
+# pandas는 2.x로 고정한다. 3.0은 copy-on-write 기본화 등 동작이 달라
+# 팀원 간 결과가 갈릴 수 있으므로 상한을 둔다.
+
+pandas>=2.0,<3.0
+numpy>=1.24,<3.0
+geopandas>=0.14        # 동 경계·좌표
+shapely>=2.0
+pyogrio>=0.7           # geojson 읽기 엔진(geopandas 백엔드)
+pyproj>=3.6            # 좌표계 변환(EPSG:4326 ↔ 5179)
+simpy>=4.0             # 이산사건 시뮬레이션 엔진
+scipy>=1.11            # 분포 적합·통계
+streamlit>=1.35        # 대시보드(plotly on_select 는 1.35+)
+plotly>=5.24           # 대시보드 지도(Choroplethmap·uirevision·transition)
+matplotlib>=3.7        # 시각화
+pyarrow>=14.0          # parquet 캐시(대용량 콜 데이터)
+openpyxl>=3.1          # 정보공개청구 xlsx(시영 피크시간 잔여구획)
+pytest>=7.4            # 코드 점검 테스트
+jupyter                # 탐색·검증용

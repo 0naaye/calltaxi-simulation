@@ -1,0 +1,77 @@
+# 데이터 (저장소 밖에 별도 보관 — 대용량이라 올리지 않음)
+# simulation 내부에 데이터를 두면 아래로 제외:
+data/
+*.csv
+*.geojson
+*.parquet              # 콜 원본 캐시 — 위치가 바뀌어도 걸리도록 확장자로도 제외
+!tests/**/*.csv        # 테스트용 소형 샘플은 허용
+
+# 시뮬 결과물
+# 'outputs/' 로 두면 git 이 디렉터리 자체를 건너뛰어 .gitkeep 도 되살릴 수 없다.
+# 내용물만 제외하고 .gitkeep 은 남겨 clone 시 폴더가 유지되게 한다.
+outputs/*
+!outputs/.gitkeep
+
+# 산출물 3종은 추적한다. 원본 CSV 가 저장소 밖이라 clone 만으로는 재생성할 수
+# 없고, 대시보드가 이 파일들을 읽는다. 위 *.csv / *.parquet 규칙보다 뒤에 와야
+# 예외가 먹는다(마지막에 일치하는 패턴이 이긴다).
+!outputs/dong_metrics.csv
+!outputs/dong_demand_matrix.parquet
+!outputs/idle_gaps.csv
+!outputs/idle_by_hour.csv
+!outputs/patience_km.csv
+!outputs/patience_summary.csv
+!outputs/dong_candidates.csv
+# 후보 평가 결과 — 대시보드가 읽고 발표 근거이기도 하다(244 × 3시드 ≈ 732행)
+!outputs/placement_eval.csv
+!outputs/placement_grades.csv
+# 민감도 결과 — model_flow.md 「민감도」 절의 근거다(9곳 × 설정 6개 = 54행, 6KB)
+!outputs/sensitivity_eval.csv
+# 보조 지표 원값 — 「대기 중 포기·60분 초과는 내지 않는다」의 근거다. 화면에서
+# 뺀 결정의 감사 자료라 결정문(model_flow.md)과 같이 있어야 한다(12KB).
+!outputs/page3_extra_raw.csv
+# patience_km.csv 는 0.5분 격자로 눌러 42KB 다. 이벤트 시점 8만 개를 그대로
+# 두면 5MB 가 넘어 저장소에 넣을 수 없다(src/patience.py 의 km_grid 참조).
+# dong_metrics.parquet 은 위 csv 와 같은 내용의 직렬화 중복이라 뺀다 —
+# 바이너리라 diff 가 안 되고 실행할 때마다 새 blob 이 쌓인다.
+
+# 저장소 동봉 소형 공개 자료 — clone 만으로 대시보드가 뜨게 하는 최소 집합.
+# 위 data/ · *.csv · *.geojson 규칙보다 뒤에 와야 예외가 먹는다.
+#
+# **콜 원본은 절대 여기 넣지 않는다(개인정보).** 대시보드는 콜 원본을 읽지
+# 않으므로(load_calls 를 부르지 않는다) 아래 셋과 outputs/ 만으로 뜬다.
+# 재실행(evaluate·metrics)에는 여전히 data/ 의 콜 원본이 필요하다.
+# 주의: .gitignore 는 **줄 끝 주석을 지원하지 않는다.** 패턴 뒤에 `#` 를 붙이면
+# 주석이 아니라 패턴의 일부가 되어 아무것도 매치하지 않는다. 주석은 윗줄에 둔다.
+!assets/
+# 5KB — 공단 공개 차고지 좌표·배속 정원
+!assets/차고지44_좌표.csv
+# 113KB — 후보 풀(공개 주차장 목록 파생)
+!assets/sim_pool_v4.csv
+# 표시 전용 경계 405KB. 원본 34.8MB 를 서울만·22m 단순화로 줄인 것이라
+# **면적·거리 계산에 쓰면 안 된다** — 그쪽은 load_dong(with_boundary=True) 가
+# 원본을 본다. 다시 만들려면 load.build_display_boundary().
+!assets/seoul_dong_display_only.geojson
+
+*.png
+*.html
+!README*.png           # 문서용 이미지는 허용
+
+# 파이썬 캐시
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+
+# 가상환경
+.venv/
+venv/
+*.egg-info/
+
+# 데이터 캐시(원본에서 재생성 가능)
+cache/
+
+# 에디터
+.vscode/
+.idea/
+.DS_Store
