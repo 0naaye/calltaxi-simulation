@@ -1,8 +1,9 @@
 # 서울 장애인콜택시 대기거점 배치 시뮬레이션
-
 2025년 서울 장애인콜택시 특장차 운행 데이터를 분석하고, **이산사건 시뮬레이션(Discrete Event Simulation)** 으로 신규 대기거점 후보 244곳의 효과를 비교한 의사결정 지원 프로젝트입니다.
 
 > 팀 프로젝트 결과를 개인 포트폴리오용으로 재구성한 저장소입니다. 프로젝트 전체 성과와 개인 기여는 구분해 작성합니다.
+
+<img width="1915" height="916" alt="image" src="https://github.com/user-attachments/assets/8162f975-cba2-40a5-a6af-4204c10a945f" />
 
 ## Overview
 
